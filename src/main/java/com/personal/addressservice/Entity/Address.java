@@ -1,6 +1,7 @@
 package com.personal.addressservice.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.personal.addressservice.Model.Mapper.ResponseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Data
 @Table(name = "Address")
-public class Address {
+public class Address extends ResponseEntity {
     @Id
     @TableGenerator(name = "Address_Gen", table = "ID_GEN",pkColumnName = "GEN_NAME",valueColumnName = "GEN_VAL",pkColumnValue = "Addr_Gen",initialValue = 10000,allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "Address_Gen")
@@ -44,4 +45,3 @@ public class Address {
     @ApiModelProperty(readOnly = true,notes = "Saves the Longitude retrieved from three words API")
     private double longitude;
 }
-

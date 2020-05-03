@@ -67,17 +67,7 @@ public class AddressController {
     //@PostMapping("/create")
     @RequestMapping(value = "/create", method = RequestMethod.POST,produces = "application/json")
     public ResponseEntity createUserAddress(@RequestBody Address addr) throws IOException {
-        try {
-            LatLong coordinates = (LatLong) Utilities.getInstance().checkThreeWords(addr.getThreeWordAddress());
-            addr.setLatitude(coordinates.getLat());
-            addr.setLongitude(coordinates.getLng());
-            log.info("Address created Successfully");
-            return addressService.saveUserAddress(addr);
-        }catch (Exception e) {
-            log.warn((String) Utilities.getInstance().checkThreeWords(addr.getThreeWordAddress()));
-            return new ErrorResponse(404,(String) Utilities.getInstance().checkThreeWords(addr.getThreeWordAddress()));
-        }
-
+        return addressService.createUserAddress(addr);
     }
 
     @ApiOperation(value = "View all user address",response = Iterable.class)
@@ -106,11 +96,7 @@ public class AddressController {
     // @GetMapping("/getAddress/{id}")
     @RequestMapping(value = "/getAddress/{id}",method = RequestMethod.GET,produces = "application/json")
     public ResponseEntity getUserById(@PathVariable Integer id){
-        if (addressService.findById(id).isPresent() == false) {
-            log.warn("No Address Found for the user with "+id);
-            return new ErrorResponse(404,"No Address Found for the user with "+id);
-        }
-        return addressService.findById(id).get();
+       return addressService.findById(id);
     }
 
     @ApiOperation(value = "Update a user address specifying the ID.Return Error Response if input is invalid",response = ResponseEntity.class)
@@ -123,30 +109,7 @@ public class AddressController {
     //@PutMapping("/update/{id}")
     @RequestMapping(value = "/update/{id}",method = RequestMethod.PUT, produces = "application/json")
     public ResponseEntity updateAddress(@RequestBody @Valid Address addr, @PathVariable Integer id) throws IOException {
-        Optional<Address> address = addressService.findById(id);
-        if (address.isPresent()) {
-            addr.setUserId(id);
-            if ( addr.getThreeWordAddress() != null && address.get().getThreeWordAddress().equalsIgnoreCase(addr.getThreeWordAddress()) == false) {
-                try {
-                    LatLong coordinates = (LatLong) Utilities.getInstance().checkThreeWords(addr.getThreeWordAddress());
-                    addr.setLatitude(coordinates.getLat());
-                    addr.setLongitude(coordinates.getLng());
-                    log.info("Address Updated Successfully for user with Id:"+id);
-                    return addressService.saveUserAddress(addr);
-                }catch (Exception e) {
-                    log.warn((String) Utilities.getInstance().checkThreeWords(addr.getThreeWordAddress()));
-                    return new ErrorResponse(404,(String) Utilities.getInstance().checkThreeWords(addr.getThreeWordAddress()));
-                }
-            }else {
-                addr.setLatitude(address.get().getLatitude());
-                addr.setLongitude(address.get().getLongitude());
-                log.info("Address Updated Successfully for user with Id:"+id);
-                return addressService.saveUserAddress(addr);
-            }
-        }else {
-            log.warn("No user found with id " + id);
-            return new ErrorResponse(404,"No user found with id " + id);
-        }
+        return addressService.updateUserAddress(addr,id);
     }
 
     @ApiOperation(value = "Delete a user address specifying the ID.Returns ErrorResponse if input is invalid",response = ResponseEntity.class)
@@ -159,14 +122,6 @@ public class AddressController {
     //@DeleteMapping("/delete/{id}")
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE,produces = "application/json")
     public ResponseEntity deleteAddress(@PathVariable Integer id){
-        Optional<Address> addr = addressService.findById(id);
-        if (addr.isPresent()) {
-            addressService.deleteUser(addr.get());
-            log.info(addr.get().toString() + "\n" + "Deleted Successfully");
-            return addr.get();
-        }else {
-            log.warn("Address not found for user with id:" + id);
-            return new ErrorResponse(404,"Address not found for user with id:" + id);
-        }
+       return addressService.deleteUser(id);
     }
 }

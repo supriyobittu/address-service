@@ -56,4 +56,15 @@ public class AddressResponse extends ResponseEntity {
         this.latitude = address.getLatitude();
         this.longitude = address.getLongitude();
     }
+
+    public AddressResponse(Address address) {
+        this.userId = address.getUserId();
+        this.name = address.getName();
+        this.addressLine1 = address.getAddressLine1();
+        this.addressLine2 = address.getAddressLine2();
+        this.city = address.getCity();
+        this.threeWordAddress = address.getThreeWordAddress();
+        this.latitude = address.getLatitude();
+        this.longitude = address.getLongitude();
+    }
 }

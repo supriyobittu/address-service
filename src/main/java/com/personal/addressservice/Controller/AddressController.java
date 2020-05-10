@@ -3,6 +3,7 @@ package com.personal.addressservice.Controller;
 import com.google.gson.Gson;
 import com.personal.addressservice.Entity.Address;
 import com.personal.addressservice.Model.LatLong;
+import com.personal.addressservice.Model.Mapper.AddressResponse;
 import com.personal.addressservice.Model.Mapper.ErrorResponse;
 import com.personal.addressservice.Model.Mapper.ResponseEntity;
 import com.personal.addressservice.Model.ThreeWordsResponse;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 @Slf4j
 @RestController
@@ -78,11 +80,10 @@ public class AddressController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found",response = ErrorResponse.class)
     }
     )
-    //@GetMapping("/getAllUsersAddress")
+    //@GetMapping("/")
     @RequestMapping(value = "/getAllUsersAddress",method = RequestMethod.GET,produces = "application/json")
-    public Iterable<Address> getAllUserAddress() {
+    public Stream<AddressResponse> getAllUserAddress() {
         log.info(addressService.findAllUsers().toString());
-        //ResponseEntity<Iterable<Address>> address = new ResponseEntity<Iterable<Address>>(addressService.findAllUsers());
         return addressService.findAllUsers();
     }
 

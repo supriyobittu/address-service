@@ -45,7 +45,8 @@ public class AddressResponse extends ResponseEntity {
     @ApiModelProperty(readOnly = true, notes = "Saves the Longitude retrieved from three words API")
     private double longitude;
 
-    public AddressResponse(Address address) {
+    public AddressResponse(String httpStatusCode,Address address) {
+        this.httpStatusCode = httpStatusCode;
         this.userId = address.getUserId();
         this.name = address.getName();
         this.addressLine1 = address.getAddressLine1();

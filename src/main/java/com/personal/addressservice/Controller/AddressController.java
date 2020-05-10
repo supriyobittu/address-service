@@ -9,10 +9,7 @@ import com.personal.addressservice.Model.Mapper.ResponseEntity;
 import com.personal.addressservice.Model.ThreeWordsResponse;
 import com.personal.addressservice.Service.AddressService;
 import com.personal.addressservice.Utilities.Utilities;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +58,7 @@ public class AddressController {
 
     @ApiOperation(value = "Add a User Address.Returns ErrorResponse If input is Invalid.",response = ResponseEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = Address.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = AddressResponse.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource",response = ErrorResponse.class),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden",response = ErrorResponse.class),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found",response = ErrorResponse.class)
@@ -72,9 +69,9 @@ public class AddressController {
         return addressService.createUserAddress(addr);
     }
 
-    @ApiOperation(value = "View all user address",response = Iterable.class)
+    @ApiOperation(value = "View all user address",response = Stream.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = Iterable.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = Stream.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource",response = ErrorResponse.class),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden",response = ErrorResponse.class),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found",response = ErrorResponse.class)
@@ -89,7 +86,7 @@ public class AddressController {
 
     @ApiOperation(value = "Search a user address with ID.Returns ErrorResponse if input is invalid",response = ResponseEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = Address.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = AddressResponse.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource",response = ErrorResponse.class),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden",response = ErrorResponse.class),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found",response = ErrorResponse.class)
@@ -102,7 +99,7 @@ public class AddressController {
 
     @ApiOperation(value = "Update a user address specifying the ID.Return Error Response if input is invalid",response = ResponseEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = Address.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = AddressResponse.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource",response = ErrorResponse.class),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden",response = ErrorResponse.class),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found",response = ErrorResponse.class)
@@ -115,7 +112,7 @@ public class AddressController {
 
     @ApiOperation(value = "Delete a user address specifying the ID.Returns ErrorResponse if input is invalid",response = ResponseEntity.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = Address.class),
+            @ApiResponse(code = 200, message = "Successfully retrieved user address",response = AddressResponse.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource",response = ErrorResponse.class),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden",response = ErrorResponse.class),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found",response = ErrorResponse.class)
